@@ -35,12 +35,22 @@ namespace BehaviorTree
         // This method runs the MoveTo action on the given WorldState object.
         public override bool run (WorldState state)
         {
-            // Fill in your conditional logic here.
+            if(Where != state.CharacterPosition[Mover])
+            {
+                Debug.Log($"location of where and mover is not the same");
+                if (state.ConnectedLocations[state.CharacterPosition[Mover]].Contains(Where))
+                {
+                    Debug.Log($"connection between {Mover} and {Where}");
+                }
+            }
+            Debug.Log("spoink");
+            return true;
+            /*// Fill in your conditional logic here.
             if (state.Debug) Debug.Log(this + " Success");
             return true;
 
             if (state.Debug) Debug.Log(this + " Fail");
-            return false;
+            return false;*/
         }
 
         // Creates and returns a string describing the MoveTo action.

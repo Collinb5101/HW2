@@ -35,12 +35,24 @@ namespace BehaviorTree
         // This method runs the Open action on the given WorldState object.
         public override bool run(WorldState state)
         {
-            // Fill in your conditional logic here:
-            if (state.Debug) Debug.Log(this + " Success");
-            return true;
+            //if the position of the Character Opener and the position of the Thing OpenThis are the same
+            //--AND--
+            //the Open value of Thing OpenThis is false
+            if (state.CharacterPosition[Opener] == state.ThingPosition[OpenThis] && !state.Open[OpenThis])
+            {
+                //set the Open value of Thing OpenThis to true
+                state.Open[OpenThis] = true;
 
-            if (state.Debug) Debug.Log(this + " Fail");
-            return false;
+                //print and return true
+                Debug.Log($"{this} successfully and gains some tasty loot :)");
+                return true;
+            }
+            else
+            {
+                //otherwise print and return false
+                Debug.Log($"{this} unsuccessfully and does not get any loot :(");
+                return false;
+            }
         }
 
         // Creates and returns a string describing the Open action.
