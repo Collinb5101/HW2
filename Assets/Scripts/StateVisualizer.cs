@@ -56,7 +56,7 @@ public class StateVisualizer : MonoBehaviour
         // If you change any of these properties it should update the Unity visualization as well.
         state.Open[Thing.Gate] = false;
         state.Open[Thing.Chest] = false;
-        state.CharacterPosition[Character.Knight] = Location.Outside;
+        state.CharacterPosition[Character.Knight] = Location.Courtyard;
         state.CharacterPosition[Character.Merlin] = Location.Hallway;
         state.ThingPosition[Thing.Potion] = Location.Outside;
         state.ThingPosition[Thing.Chest] = Location.Courtyard;

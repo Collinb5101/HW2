@@ -16,10 +16,15 @@ namespace BehaviorTree
             if (state.Debug) Debug.Log("Sequencer Start");
 
             // Fill in your sequence logic here:
-            if (state.Debug) Debug.Log("Sequencer Fail");
-            return false;
-
-            if (state.Debug) Debug.Log("Sequencer Success");
+            foreach(Task task in children)
+            {
+                if (!task.run(state))
+                {
+                    Debug.Log("Sequencer Fail");
+                    return false;
+                }
+            }
+            Debug.Log("Sequencer Success");
             return true;
         }
     }

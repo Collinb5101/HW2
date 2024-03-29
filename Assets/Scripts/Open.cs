@@ -44,13 +44,13 @@ namespace BehaviorTree
                 state.Open[OpenThis] = true;
 
                 //print and return true
-                Debug.Log($"{this} successfully and gains some tasty loot :)");
+                Debug.Log($"{this} successfully");
                 return true;
             }
             else
             {
                 //otherwise print and return false
-                Debug.Log($"{this} unsuccessfully and does not get any loot :(");
+                Debug.Log($"{this} unsuccessfully");
                 return false;
             }
         }

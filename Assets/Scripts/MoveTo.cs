@@ -35,22 +35,44 @@ namespace BehaviorTree
         // This method runs the MoveTo action on the given WorldState object.
         public override bool run (WorldState state)
         {
+            //if the Location Where is not the same location as the Character Mover's position
             if(Where != state.CharacterPosition[Mover])
             {
                 Debug.Log($"location of where and mover is not the same");
+
+                //if there is a connection between the Mover's position and the Where location
                 if (state.ConnectedLocations[state.CharacterPosition[Mover]].Contains(Where))
                 {
                     Debug.Log($"connection between {Mover} and {Where}");
-                }
-            }
-            Debug.Log("spoink");
-            return true;
-            /*// Fill in your conditional logic here.
-            if (state.Debug) Debug.Log(this + " Success");
-            return true;
 
-            if (state.Debug) Debug.Log(this + " Fail");
-            return false;*/
+                    //if there is a Gate between the Mover and the Where location
+                    if (state.BetweenLocations.ContainsKey(Where) && state.BetweenLocations[Where].Item1 == Thing.Gate && state.BetweenLocations[Where].Item2 == state.CharacterPosition[Mover])
+                    {
+                        Debug.Log($"There's a gate between {Where} and {state.CharacterPosition[Mover]}");
+
+                        //if that Gate is open
+                        if (state.Open[state.BetweenLocations[Where].Item1])
+                        {
+                            Debug.Log($"The gate is open! CHAAAARRRGGGEE!!!");
+                            state.CharacterPosition[Mover] = Where;
+                            return true;
+                        }
+                    }
+                    //there is no Gate
+                    else
+                    {
+                        Debug.Log($"There's no gate between {Where} and {state.CharacterPosition[Mover]}");
+                        state.CharacterPosition[Mover] = Where;
+                        return true;
+                    }
+                    
+                }
+
+            }
+
+            //if the code has dodged all of the true cases then it must be false
+            Debug.Log($"The {Mover} is unable to move to {Where}");
+            return false;
         }
 
         // Creates and returns a string describing the MoveTo action.
