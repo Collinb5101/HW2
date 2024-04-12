@@ -28,6 +28,7 @@ namespace BehaviorTree
         // This will be useful when determining whether a door must be open in order for a Character to move between two Locations connected by the door.
         public Dictionary<Location, Tuple<Thing, Location>> BetweenLocations { get; set; } = new Dictionary<Location, Tuple<Thing, Location>>();
 
+        public Dictionary<Character, Thing> CharacterInventories { get; set; } = new Dictionary<Character, Thing>();
         // Formats and returns a string that represents the current world state.
         public override string ToString()
         {
@@ -48,6 +49,9 @@ namespace BehaviorTree
 
             foreach (Location location in BetweenLocations.Keys)
                 output += BetweenLocations[location].Item1 + " is between " + location + " and " + BetweenLocations[location].Item2 + Environment.NewLine;
+
+            foreach (Character character in CharacterInventories.Keys)
+                output += character + " inventory contains " + CharacterInventories[character] + Environment.NewLine;
 
             return output;
         }

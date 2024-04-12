@@ -262,6 +262,79 @@ public class BehaviorTreeEditor : EditorWindow
                 menu.ShowAsContext();
             }
         }
+        // This formats the IsHere window.
+        else if (TypeToString(idToNode[windowID].GetType()) == "IsHere")
+        {
+            IsHere isHereTask = idToNode[windowID] as IsHere;
+
+            if (GUI.Button(new Rect(5, 20, 190, 20), "Is here?: " + isHereTask.What.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Thing thing in Enum.GetValues(typeof(Thing)))
+                {
+                    string thingString = thing.ToString();
+                    menu.AddItem(new GUIContent(thingString), false, () =>
+                    {
+                        Debug.Log("Check if this is here: " + thingString);
+                        isHereTask.What = thing;
+                        idToNode[windowID] = isHereTask;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+            if (GUI.Button(new Rect(5, 45, 190, 20), "Grabber: " + isHereTask.Checker.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Character character in Enum.GetValues(typeof(Character)))
+                {
+                    string characterString = character.ToString();
+                    menu.AddItem(new GUIContent(characterString), false, () =>
+                    {
+                        Debug.Log("Check this set to: " + characterString);
+                        isHereTask.Checker = character;
+                        idToNode[windowID] = isHereTask;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+        }
+        // This section formats the PickUp window.
+        else if (TypeToString(idToNode[windowID].GetType()) == "PickUp")
+        {
+            PickUp pickupTask = idToNode[windowID] as PickUp;
+
+            if (GUI.Button(new Rect(5, 20, 190, 20), "Grabber: " + pickupTask.Grabber.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Character character in Enum.GetValues(typeof(Character)))
+                {
+                    string characterString = character.ToString();
+                    menu.AddItem(new GUIContent(characterString), false, () =>
+                    {
+                        Debug.Log("Grabber set to: " + characterString);
+                        pickupTask.Grabber = character;
+                        idToNode[windowID] = pickupTask;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+
+            if (GUI.Button(new Rect(5, 45, 190, 20), "Grab this: " + pickupTask.GrabThis.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Thing thing in Enum.GetValues(typeof(Thing)))
+                {
+                    string thingString = thing.ToString();
+                    menu.AddItem(new GUIContent(thingString), false, () =>
+                    {
+                        Debug.Log("Grab this set to: " + thingString);
+                        pickupTask.GrabThis = thing;
+                        idToNode[windowID] = pickupTask;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+        }
         // This section formats the Move To window.
         else if (TypeToString(idToNode[windowID].GetType()) == "MoveTo")
         {

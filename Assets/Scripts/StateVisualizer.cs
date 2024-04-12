@@ -56,6 +56,8 @@ public class StateVisualizer : MonoBehaviour
         // If you change any of these properties it should update the Unity visualization as well.
         state.Open[Thing.Gate] = false;
         state.Open[Thing.Chest] = false;
+
+        
         state.CharacterPosition[Character.Knight] = Location.Courtyard;
         state.CharacterPosition[Character.Merlin] = Location.Hallway;
         state.ThingPosition[Thing.Potion] = Location.Outside;
@@ -81,6 +83,9 @@ public class StateVisualizer : MonoBehaviour
 
         Debug.Log(state);
 
+        //add characters to the inventory dictionary with no items
+        state.CharacterInventories.Add(Character.Knight, Thing.None);
+        state.CharacterInventories.Add(Character.Merlin, Thing.None);
 
         // Connect the Location enum items with their Unity game object counterparts.
         locationGameObjects.Add(Location.Courtyard, courtyard);
@@ -129,11 +134,18 @@ public class StateVisualizer : MonoBehaviour
             // Grab the location of the current Thing.
             Location location = state.ThingPosition[thing];
 
-            // Instantiate a game object at a random tile in the room from the WorldState using the Thing's prefab.
-            GameObject thingGameObject = Draw(thingPrefabs[thing], locationGameObjects[location]);
+            //renders all objects to screen that are not at a location of None
+            if(location != Location.None)
+            {
+                // Instantiate a game object at a random tile in the room from the WorldState using the Thing's prefab.
+                GameObject thingGameObject = Draw(thingPrefabs[thing], locationGameObjects[location]);
 
-            // Add the instantiated game object to the dictionary of Thing enum -> game objects.
-            thingGameObjects.Add(thing, thingGameObject);
+                // Add the instantiated game object to the dictionary of Thing enum -> game objects.
+                thingGameObjects.Add(thing, thingGameObject);
+            }
+            
+
+            
         }
 
         // Loop through each Character in the dictionary of Character enum -> prefabs...
